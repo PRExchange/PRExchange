@@ -1,11 +1,11 @@
 import React from 'react';
 
 // class component
-class App extends React.Component {
+class PRExchange extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: 'Hello from the App component!'
+      text: 'Hello from the PRExchange component!'
     }
     this.someFunction = this.someFunction.bind(this);
   }
@@ -16,7 +16,7 @@ class App extends React.Component {
   }
 
   componentWillMount() {
-    console.log('App component mounted!');
+    console.log('PRExchange component mounted!');
   }
 
   render() {
@@ -34,12 +34,12 @@ class App extends React.Component {
 
 // Functional component
 
-// const App = (optionalProps) => {
+// const PRExchange = (optionalProps) => {
 //   return (
 //     <div className="row text-center">
-//       <h3>Functional App Component</h3>
+//       <h3>Functional PRExchange Component</h3>
 //     </div>
 //   );
 // }
 
-export default App;
+export default PRExchange;

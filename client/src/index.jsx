@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
+import PRExchange from './components/PRExchange';
 
-ReactDOM.render(<App />, document.getElementById('app'));
+ReactDOM.render(<PRExchange />, document.getElementById('app'));
