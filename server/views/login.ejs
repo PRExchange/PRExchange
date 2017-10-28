@@ -1,0 +1,19 @@
+<% include head.ejs%>
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col col-md-6 text-center">
+
+            <h1> You must Login or Signup to Continue</h1>
+
+            <!-- show any messages that come back with authentication -->
+            <% if (message.length > 0) { %>
+            <div class="alert alert-danger"><%= message %></div>
+            <% } %>
+            <div>
+                <a className='btn btn-link' role='button' href='/auth/github'><img src='/assets/github.png' style={{'width': '30px'}}></img>Login with GitHub</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<% include foot.ejs%>
