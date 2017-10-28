@@ -1,5 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PRExchange from './components/PRExchange';
+import Routes from './components/Routes';
 
-ReactDOM.render(<PRExchange />, document.getElementById('app'));
+ReactDOM.render(<Routes />, document.getElementById('app'));
