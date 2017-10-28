@@ -13,6 +13,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "ejs": "^2.5.7",
     "express": "^4.16.1",
     "nodemon": "^1.12.1",
     "path": "^0.12.7",
