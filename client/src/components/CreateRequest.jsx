@@ -43,6 +43,8 @@ class CreateRequest extends React.Component {
           <button className="btn btn-submit" onClick={this.handleClick}>Submit</button>
         </form>
       </div>
-    )
+    );
   }
-}
+};
+
+export default CreateRequest;
