@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 
 import About from './About';
-import AllOpenRequests from './AllOpenRequests';
+import Home from './Home';
 import CreateRequest from './CreateRequest';
 import Nav from './Nav';
 import PrivateRoute from './PrivateRoute';
@@ -24,7 +24,7 @@ const Routes = () => (
     <div className="container">
       <Router>
         <Switch>
-          <Route exact path='/' component={AllOpenRequests} />
+          <Route exact path='/' component={Home} />
           <Route path='/about' component={About} />
           <PrivateRoute path='/createrequest' component={CreateRequest} />
           <PrivateRoute path='/requestform' component={RequestForm} />
