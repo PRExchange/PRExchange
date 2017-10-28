@@ -7,12 +7,12 @@ import {
 const PrivateRoute = ({component: Component, loggedIn, ...rest}) => {
   return (
     <Route {...rest}
-      render={props => 
+      render={props =>
         window.user ?
-          <Component {...props} />
+          <Component {...props}/>
         :
-          <Redirect to={{pathname: 'redirected'}} />
-      } />
+          <Redirect to={{pathname: '/redirected'}}/>
+      }/>
   );
 };
 
