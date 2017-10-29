@@ -1,5 +1,5 @@
 const session = require('express-session');
-const model = require('../../db/models');
+// const models = require('../../db/models');
 
 module.exports.homeRedirect = (req, res, next) => {
   if (req.user) {
