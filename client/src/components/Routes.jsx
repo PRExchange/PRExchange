@@ -14,7 +14,7 @@ import Home from './Home';
 import CreateRequest from './CreateRequest';
 import Nav from './Nav';
 import PrivateRoute from './PrivateRoute';
-import Redirect from './Redirect';
+import Redirected from './Redirected';
 import RequestForm from './RequestForm';
 import Request from './Request';
 
