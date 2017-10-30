@@ -1,6 +1,6 @@
 const db = require('../');
 
-constAuth = db.Model.extend({
+const Auth = db.Model.extend({
   tableName: 'auths',
   profile: function() {
     return this.belongsTo('Profile');
