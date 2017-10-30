@@ -43,7 +43,7 @@ passport.use('github', new GitHubStrategy({
         if (user) {
           return done(null, user);
         } else {
-          const newUser = models.User();
+          const newUser = models.Profile();
 
           newUser.github.id = profile.id;
           newUser.github.token = token;
