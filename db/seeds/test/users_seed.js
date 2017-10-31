@@ -7,10 +7,9 @@ exports.seed = function(knex, Promise) {
         throw rofile;
       }
       return models.Profile.forge({
-        first: 'System',
-        last: 'Admin',
-        display: 'Administrator',
-        email: 'admin@domain.com'
+        displayName: 'Administrator',
+        username: 'SystemAdministrator',
+        profileUrl: 'github.com'
       }).save();
     })
     .error(err => {

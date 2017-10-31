@@ -7,16 +7,15 @@ exports.seed = function(knex, Promise) {
         throw profile;
       }
       return models.Profile.forge({
-        first: 'Test',
-        last: 'User',
-        display: 'TestUser',
-        email: 'test@example.com'
+        displayName: 'Test',
+        username: 'TestUser',
+        profileUrl: 'github.com'
       }).save();
     })
     .then(profile => {
       return models.Repo.forge({
         title: 'MyExampleRepo',
-        owner_id: profile.attributes.id,
+        profile_id: profile.attributes.id,
         github_link: 'www.github.com'
       }).save();
     })

@@ -3,7 +3,9 @@ import React from 'react';
 const Login = () => {
   return (
     <div className='col text-center'>
-      <a className='btn btn-link' role='button' href='/auth/github'><img src='/assets/github.png' style={{'width': '30px'}}></img>Login with GitHub</a>
+      <a href="/auth/github" className="btn">
+        <span className="fa fa-github"></span> Github
+      </a>
     </div>
   );
 };

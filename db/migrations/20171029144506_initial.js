@@ -3,16 +3,15 @@ exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTableIfNotExists('profiles', table => {
       table.increments('id').unsigned().primary();
-      table.string('first', 100).nullable();
-      table.string('last', 100).nullable();
-      table.string('display', 100).nullable();
-      table.string('email', 100).nullable().unique();
+      table.string('displayName', 100).nullable();
+      table.string('username', 100).nullable();
+      table.string('profileUrl', 100).nullable();
       table.timestamps(true, true);
     }),
     knex.schema.createTableIfNotExists('auths', table => {
       table.increments('id').unsigned().primary();
       table.string('type', 6).notNullable();
-      table.string('oauth_id', 50).nullable();
+      table.string('oauth_id', 100).nullable();
       table.integer('profile_id').references('id').inTable('profiles').onDelete('CASCADE');
     }),
     knex.schema.createTableIfNotExists('repos', table => {

@@ -1,15 +1,16 @@
+require('dotenv').config();
 const session = require('express-session');
 // const models = require('../../db/models');
 
 module.exports.homeRedirect = (req, res, next) => {
   if (req.user) {
-    return res.redirect('/home')
+    return res.redirect('/home');
   }
   next();
 };
 
 module.exports.redirect = (req, res) => {
-  let redirect = req.session.returnTo || '/home';
+  let redirect = req.session.returnTo || '/';
   delete req.session.returnTo;
   res.redirect(redirect);
 };
@@ -26,3 +27,9 @@ module.exports.verify = (req, res, next) => {
   req.session.returnTo = req.originalUrl;
   res.redirect('/login');
 };
+
+module.exports.session = session({
+  secret: process.env.EXPRESS_SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+});

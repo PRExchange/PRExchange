@@ -1,16 +1,15 @@
 const models = require('../../models');
 
 exports.seed = function(knex, Promise) {
-  return models.Profile.where({ email: 'admin@domain.com' }).fetch()
+  return models.Profile.where({ profileUrl: 'github.com' }).fetch()
     .then(profile => {
       if (profile) {
-        throw rofile;
+        throw profile;
       }
       return models.Profile.forge({
-        first: 'System',
-        last: 'Admin',
-        display: 'Administrator',
-        email: 'admin@domain.com'
+        displayName: 'Test',
+        username: 'TestUser',
+        profileUrl: 'github.com'
       }).save();
     })
     .error(err => {
