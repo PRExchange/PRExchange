@@ -4,7 +4,7 @@ const GitHubStrategy = require('passport-github2').Strategy;
 const models = require('../../db/models');
 
 passport.serializeUser((profile, done) => {
-  return (null, profile.id);
+  done(null, profile.id);
 });
 
 passport.deserializeUser((id, done) => {
@@ -24,42 +24,71 @@ passport.deserializeUser((id, done) => {
 });
 
 passport.use('github', new GitHubStrategy({
-  clientId: process.env.GITHUB_CLIENT_ID,
+  clientID: process.env.GITHUB_CLIENT_ID,
   clientSecret: process.env.GITHUB_CLIENT_SECRET,
   callbackURL: process.env.GITHUB_CALLBAKCURL
 },
-  (token, refreshToken, profile, done) => {
-    process.nextTick(() => {
-      return models.Auth.where({
-        'github.id': profile.id,
-        'github.login': profile.login,
-        'github.name': profile.name,
-        'github.username': profile.username,
-        'github.email': profile.email
-      }, (err, user) => {
-        if (err) {
-          return done(err);
-        }
-        if (user) {
-          return done(null, user);
-        } else {
-          const newUser = models.Profile();
+  (token, refreshToken, profile, done) => getOrCreateOAuthProfile('github', profile, done))
+);
 
-          newUser.github.id = profile.id;
-          newUser.github.token = token;
-          newUser.github.name = profile.displayName;
-          newUser.github.username = profile.username;
 
-          newUser.save((err) => {
-            if (err) {
-              throw err;
-            }
+const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
+  return models.Auth.where({ type, oauth_id: oauthProfile.id }).fetch({
+    withRelated: ['profile']
+  })
+    .then(oauthAccount => {
 
-            return done(null, newUser);
-          });
-        }
-      });
+      if (oauthAccount) {
+        throw oauthAccount;
+      }
+
+      return models.Profile.where({ email: oauthProfile.emails[0].value }).fetch();
+    })
+    .then(profile => {
+
+      console.log(profile, '======================');
+
+      let profileInfo = {
+        id: oauthProfile.id,
+        displayName: oauthProfile.displayName,
+        username: oauthProfile.username,
+        profileUrl: oauthProfile.profileUrl
+      };
+
+      if (profile) {
+        console.log('profile found!');
+        return profile.save(profileInfo, { method: 'update' });
+      }
+      console.log('No profile. Making DB entry');
+      return models.Profile.forge(profileInfo).save();
+    })
+    .tap(profile => {
+      return models.Auth.forge({
+        type,
+        profile_id: profile.get('id'),
+        oauth_id: oauthProfile.id
+      }).save();
+    })
+    .error(err => {
+      done(err, null);
+    })
+    .catch(oauthAccount => {
+      if (!oauthAccount) {
+        console.log('No oauth account!');
+        throw oauthAccount;
+      }
+      return oauthAccount.related('profile');
+    })
+    .then(profile => {
+      console.log('final then statement');
+      if (profile) {
+        console.log('Profile ~~~~~~~~~~~~~~~~');
+        done(null, profile.serialize());
+      }
+    })
+    .catch(() => {
+      done(null, null, {'message': 'Signing up requires an email address'});
     });
-}));
+};
 
 module.exports = passport;

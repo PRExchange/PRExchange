@@ -5,12 +5,10 @@
 
             <h1> You must Login or Signup to Continue</h1>
 
-            <!-- show any messages that come back with authentication -->
-            <% if (message.length > 0) { %>
-            <div class="alert alert-danger"><%= message %></div>
-            <% } %>
             <div>
-                <a className='btn btn-link' role='button' href='/auth/github'><img src='/assets/github.png' style={{'width': '30px'}}></img>Login with GitHub</a>
+                <a href="/auth/github">
+                    <span class="fa fa-github"></span> Github
+                </a>
             </div>
         </div>
     </div>
