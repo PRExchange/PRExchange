@@ -26,11 +26,12 @@ const Routes = () => (
         <Switch>
           <Route exact path='/' component={Home} />
           <Route path='/about' component={About} />
+          <PrivateRoute path='/home' component={Home} />
           <PrivateRoute path='/createrequest' component={CreateRequest} />
           <PrivateRoute path='/requestform' component={RequestForm} />
           <PrivateRoute path='/request/:id' component={Request} />
           <Route path='/redirected' component={Redirect} />
-          <Route render={() => <h1>404 Page Not Found</h1>} />
+          
         </Switch>
       </Router>
     </div>
