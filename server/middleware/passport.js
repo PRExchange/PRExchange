@@ -42,14 +42,12 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
         throw oauthAccount;
       }
 
-      return models.Profile.where({ email: oauthProfile.emails[0].value }).fetch();
+      return models.Profile.where({ github_id: oauthProfile.id }).fetch();
     })
     .then(profile => {
 
-      console.log(profile, '======================');
-
       let profileInfo = {
-        id: oauthProfile.id,
+        github_id: oauthProfile.id,
         displayName: oauthProfile.displayName,
         username: oauthProfile.username,
         profileUrl: oauthProfile.profileUrl
@@ -59,7 +57,6 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
         console.log('profile found!');
         return profile.save(profileInfo, { method: 'update' });
       }
-      console.log('No profile. Making DB entry');
       return models.Profile.forge(profileInfo).save();
     })
     .tap(profile => {
@@ -70,11 +67,12 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
       }).save();
     })
     .error(err => {
+      console.log('Done with an error');
       done(err, null);
     })
     .catch(oauthAccount => {
       if (!oauthAccount) {
-        console.log('No oauth account!');
+        console.log('No oauthAccount');
         throw oauthAccount;
       }
       return oauthAccount.related('profile');
