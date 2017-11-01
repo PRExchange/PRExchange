@@ -6,6 +6,7 @@ exports.up = function(knex, Promise) {
       table.string('displayName', 100).nullable();
       table.string('username', 100).nullable();
       table.string('profileUrl', 100).nullable();
+      table.integer('github_id').nullable().unique();
       table.timestamps(true, true);
     }),
     knex.schema.createTableIfNotExists('auths', table => {

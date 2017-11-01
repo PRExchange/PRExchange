@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'development') {
     seeds: {
       directory: 'db/seeds/development'
     },
-    debug: true
+    // debug: true
   };
 }
 
