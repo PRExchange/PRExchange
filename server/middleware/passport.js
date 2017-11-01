@@ -54,7 +54,6 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
       };
 
       if (profile) {
-        console.log('profile found!');
         return profile.save(profileInfo, { method: 'update' });
       }
       return models.Profile.forge(profileInfo).save();
@@ -67,20 +66,16 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
       }).save();
     })
     .error(err => {
-      console.log('Done with an error');
       done(err, null);
     })
     .catch(oauthAccount => {
       if (!oauthAccount) {
-        console.log('No oauthAccount');
         throw oauthAccount;
       }
       return oauthAccount.related('profile');
     })
     .then(profile => {
-      console.log('final then statement');
       if (profile) {
-        console.log('Profile ~~~~~~~~~~~~~~~~');
         done(null, profile.serialize());
       }
     })
