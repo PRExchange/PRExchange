@@ -4,7 +4,7 @@ class CreateRequest extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      requestNumber: 0,
+      requests: [],
       requestBody: ''
     }
 
@@ -28,16 +28,12 @@ class CreateRequest extends React.Component {
     console.log(this.state.requestBody);
   }
 
-  componentWillMount() {
-    // some function to set the correct requestNumber
-  }
-
   render() {
     return (
       <div>
         <form>
           <div className="form-group">
-            <label for="issueRequest">Open an Issue</label>
+            <label htmlFor="issueRequest">Open an Issue</label>
             <textarea className="form-control" id="issueRequest" rows="5" onChange={this.handleChange}></textarea>
           </div>
           <button className="btn btn-submit" onClick={this.handleClick}>Submit</button>
