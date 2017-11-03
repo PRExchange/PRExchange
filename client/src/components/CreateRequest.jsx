@@ -11,7 +11,6 @@ class CreateRequest extends React.Component {
 
     this.addRequest = this.addRequest.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.removeLastRequest = this.removeLastRequest.bind(this);
   }
@@ -20,22 +19,27 @@ class CreateRequest extends React.Component {
     e.preventDefault();
     let requestCounter = this.state.requestCounter;
     let len = requestCounter.length;
-    requestCounter.push(len + 1);
+    requestCounter.push(len);
     console.log(requestCounter);
     this.setState(requestCounter);
   }
 
   handleClick(e) {
     e.preventDefault();
-    handleSubmit();
+    this.handleSubmit();
   }
 
-  handleChange() {
-    
-  }
-
-  handleSubmit() {
-    console.log(this.state.requests);
+  handleSubmit(e) {
+    const forms = document.getElementsByClassName('form-group')[0].children;
+    let requests = this.state.requests;
+    for (let i = 0; i < forms.length; i++) {
+      let cur = forms[i].childNodes;
+      let curTitle = cur[1].value;
+      let curBody = cur[3].value;
+      requests.push({title: curTitle, body: curBody});
+    }
+    console.log(requests, '============')
+    this.setState({requests});
   }
 
   removeLastRequest(e) {
@@ -43,9 +47,9 @@ class CreateRequest extends React.Component {
     let requestCounter = this.state.requestCounter;
     let requests = this.state.requests;
     let len = requestCounter.length;
-    if (len > 0) {
-      requestCounter.pop();
-      requests.pop();
+    if (len > -1) {
+      requestCounter = requestCounter.slice(0, requestCounter.length - 1);
+      requests = requests.slice(0, requests.length - 1);
       this.setState({requestCounter, requests});
     }
   }
@@ -64,7 +68,7 @@ class CreateRequest extends React.Component {
             
             <div className="form-group">  
               {this.state.requestCounter.map((req, idx) =>
-                <InputForm key={idx} handleChange={this.handleChange}/>
+                <InputForm key={idx} id={idx} handleChange={this.handleChange}/>
               )}
             </div>
           </form>
