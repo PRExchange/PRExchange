@@ -8,22 +8,29 @@ class InputForm extends React.Component {
       body: ''
     }
 
-    this.handleChange = this.handleChange.bind(this);
+    this.setBody = this.setBody.bind(this);
+    this.setTitle = this.setTitle.bind(this);
   }
 
-  handleChange(e) {
-    console.log(e.target.value);
-    // this.setState({body});
-    // this.props.passToParent(body)
+  setBody(e) {
+    const idx = this.state.id;
+    let body = e.target.value;
+    this.setState({body});
+  }
+
+  setTitle(e) {
+    const idx = this.state.id;
+    let title = e.target.value;
+    this.setState({title});
   }
 
   render() {
     return (
       <div>
         <label htmlFor="issueTitle">Title of the Issue</label>
-        <textarea className="form-control" placeholder="Title" id="issueTitle" />
+        <textarea className="form-control" placeholder="Title" id="issueTitle" onChange={this.setTitle} />
         <label htmlFor="issueRequest">Description</label>
-        <textarea className="form-control" placeholder="Describe the issue you want opened" id="issueRequest" rows="5" onChange={this.handleChange()}></textarea>
+        <textarea className="form-control" placeholder="Describe the issue you want opened" id="issueRequest" rows="5" onChange={this.setBody}></textarea>
       </div>
     );
   }
