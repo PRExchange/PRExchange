@@ -5,6 +5,7 @@ class CreateRequest extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      
       requests: [],
       requestCounter: [],
     }
@@ -38,7 +39,16 @@ class CreateRequest extends React.Component {
       let curBody = cur[3].value;
       requests.push({title: curTitle, body: curBody});
     }
-    console.log(requests, '============')
+
+    fetch('/api/createrequest', {
+      method: 'post',
+      data: {
+        requests: this.state.requests
+      }
+    })
+      .then(res => {
+
+      })
     this.setState({requests});
   }
 
@@ -66,7 +76,7 @@ class CreateRequest extends React.Component {
               <button className="btn btn-danger" style={{'margin':'2px'}} onClick={this.removeLastRequest}>Remove Last</button>
             </div>
             
-            <div className="form-group">  
+            <div className="form-group">
               {this.state.requestCounter.map((req, idx) =>
                 <InputForm key={idx} id={idx} handleChange={this.handleChange}/>
               )}
