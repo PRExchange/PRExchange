@@ -1,103 +1,115 @@
 import React from 'react';
-import InputForm from './InputForm';
+import AllIssues from './AllIssues'; 
 
 class CreateRequest extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      
-      requests: [],
-      requestCounter: [],
+      gitHubLink: '',
+      allIssues: [],
+      issueTitle: '',
+      issueDescription: '',
     }
 
-    this.addRequest = this.addRequest.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.confirmDone = this.confirmDone.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.removeLastRequest = this.removeLastRequest.bind(this);
+    this.resetState = this.resetState.bind(this);
+    this.setDescription = this.setDescription.bind(this);
+    this.setLink = this.setLink.bind(this);
+    this.setTitle = this.setTitle.bind(this);
   }
 
-  addRequest(e) {
+  confirmDone(e) {
     e.preventDefault();
-    let requestCounter = this.state.requestCounter;
-    let len = requestCounter.length;
-    requestCounter.push(len);
-    console.log(requestCounter);
-    this.setState(requestCounter);
-  }
-
-  handleClick(e) {
-    e.preventDefault();
-    this.handleSubmit();
+    if (this.state.allIssues.length > 0) {
+      console.log('Clicked Done! Save data to DB here');
+    } else {
+      alert('Please fill out at least one issue reques before continuing');
+    }
   }
 
   handleSubmit(e) {
-    const forms = document.getElementsByClassName('form-group')[0].children;
-    let requests = this.state.requests;
-    for (let i = 0; i < forms.length; i++) {
-      let cur = forms[i].childNodes;
-      let curTitle = cur[1].value;
-      let curBody = cur[3].value;
-      requests.push({title: curTitle, body: curBody});
-    }
-
-    fetch('/api/createrequest', {
-      method: 'post',
-      data: {
-        requests: this.state.requests
+    e.preventDefault();
+    if (this.state.gitHubLink && this.state.issueTitle && this.state.issueDescription) {
+      let allIssues = this.state.allIssues;
+      let newIssue = {
+        gitHubLink: this.state.gitHubLink,
+        issueTitle: this.state.issueTitle,
+        issueDescription: this.state.issueDescription
       }
-    })
-      .then(res => {
-
-      })
-    this.setState({requests});
+      allIssues.push(newIssue);
+      this.setState({allIssues});
+      this.resetState();
+    }
   }
 
-  removeLastRequest(e) {
-    e.preventDefault();
-    let requestCounter = this.state.requestCounter;
-    let requests = this.state.requests;
-    let len = requestCounter.length;
-    if (len > -1) {
-      requestCounter = requestCounter.slice(0, requestCounter.length - 1);
-      requests = requests.slice(0, requests.length - 1);
-      this.setState({requestCounter, requests});
-    }
+  resetState() {
+    let issueTitle = '';
+    let issueDescription = '';
+    this.setState({ issueTitle, issueDescription});
+  }
+
+  setDescription(e) {
+    let issueDescription = e.target.value;
+    this.setState({issueDescription});
+  }
+
+  setLink(e) {
+    let gitHubLink = e.target.value;
+    this.setState({gitHubLink});
+  }
+
+  setTitle(e) {
+    let issueTitle = e.target.value;
+    this.setState({issueTitle});
   }
 
   render() {
-    if (this.state.requestCounter.length > 0) {
-      return (
-        <div>
-          <form>
-
-            <div className="btn-group">
-              <button className="btn btn-primary" style={{'margin':'2px'}} onClick={this.handleClick}>Submit</button>
-              <button className="btn btn-secondary" style={{'margin':'2px'}} onClick={this.addRequest}>Add</button>
-              <button className="btn btn-danger" style={{'margin':'2px'}} onClick={this.removeLastRequest}>Remove Last</button>
-            </div>
-            
-            <div className="form-group">
-              {this.state.requestCounter.map((req, idx) =>
-                <InputForm key={idx} id={idx} handleChange={this.handleChange}/>
-              )}
-            </div>
-          </form>
-        </div>
-      );
-    } else {
-      return (
-        <div>
-          <form>
-
-            <div className="btn-group">
-              <button className="btn btn-primary" style={{'margin':'2px'}} disabled>Submit</button>
-              <button className="btn btn-secondary" style={{'margin':'2px'}} onClick={this.addRequest}>Add</button>
-              <button className="btn btn-danger" style={{'margin':'2px'}} disabled>Remove Last</button>
-            </div>
-          </form>
-        </div>
-      );
-    }
+    return (
+      <div>
+        <AllIssues
+          allIssues={this.state.allIssues}
+          repository={this.state.gitHubLink} />
+        <hr />
+        <form>
+          <div className="form-group">
+            <label htmlFor="githubLink">Link to the GitHub Repository</label>
+            <input
+              type="text"
+              className="form-control"
+              id="githubLink"
+              placeholder="GitHub Repository"
+              onChange={this.setLink}
+              required/>
+          </div>
+          <div className="form-group">
+            <label htmlFor="issueTitle">Issue Title</label>
+            <input
+              type="text"
+              className="form-control"
+              id="issueTitle"
+              palceholder="Title"
+              value={this.state.issueTitle}
+              onChange={this.setTitle}
+              required/>
+          </div>
+          <div className="form-group">
+            <label htmlFor="issueDescription">Description</label>
+            <input
+              type="text"
+              className="form-control"
+              id="issueDescription"
+              palceholder="Describe the issue you want opened"
+              value={this.state.issueDescription}
+              onChange={this.setDescription}
+              required/>
+          </div>
+          <button className="btn btn-primary" onClick={this.handleSubmit}>Add Issue</button>
+        </form>
+        <br />
+        <button className="btn btn-submit" onClick={this.confirmDone}>Submit Issue Request</button>
+      </div>
+    );
   }
 };
 
