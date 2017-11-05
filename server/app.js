@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', routes.auth);
 
-app.all('/api/*', routes.api);
-app.use('/api/createrequest', routes.createRequest)
+// app.all('/api/*', routes.api);
+// app.use('/api/createrequest', routes.createRequest)
 
 module.exports = app;
