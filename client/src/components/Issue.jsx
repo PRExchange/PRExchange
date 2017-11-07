@@ -6,6 +6,7 @@ const Issue = props => {
     <tr>
       <td>{issue.issueTitle}</td>
       <td>{issue.issueDescription}</td>
+      <td>{issue.issueStatus}</td>
     </tr>
   );
 }

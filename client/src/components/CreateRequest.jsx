@@ -22,7 +22,28 @@ class CreateRequest extends React.Component {
   confirmDone(e) {
     e.preventDefault();
     if (this.state.allIssues.length > 0) {
-      console.log('Clicked Done! Save data to DB here');
+      const data = {
+        gitHubLink: this.state.gitHubLink,
+        allIssues: this.state.allIssues,
+        user: window.user
+      }
+      fetch('/api/createrequest', {
+        method: 'post',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      })
+      .then(res => {
+        res.json()
+        .then(data => {
+          console.log(data, 'data!!!');
+        })
+      })
+      .catch(err => {
+        console.error(err, 'Error in Fetch');
+      })
     } else {
       alert('Please fill out at least one issue reques before continuing');
     }
@@ -35,7 +56,8 @@ class CreateRequest extends React.Component {
       let newIssue = {
         gitHubLink: this.state.gitHubLink,
         issueTitle: this.state.issueTitle,
-        issueDescription: this.state.issueDescription
+        issueDescription: this.state.issueDescription,
+        issueStatus: 'open'
       }
       allIssues.push(newIssue);
       this.setState({allIssues});
