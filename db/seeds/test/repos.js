@@ -10,7 +10,7 @@ exports.seed = function(knex, Promise) {
         displayName: 'Test',
         username: 'TestUser',
         profileUrl: 'github.com',
-        github_id: 0
+        github_id: 1
       }).save();
     })
     .then(profile => {
