@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, '../public')));
 
 app.use('/', routes.auth);
 
-app.all(['/api', '/api/*'], middleware.auth.api);
+// app.all(['/api', '/api/*'], middleware.auth.api);
 app.use('/api', routes.api);
 app.use('/api/createrequest', routes.createrequest)
 
