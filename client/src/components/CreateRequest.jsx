@@ -33,8 +33,30 @@ class CreateRequest extends React.Component {
   handleClick(e) {
     e.preventDefault();
     if (this.state.title.length > 0 && this.state.gitHubLink.length > 0 && this.state.allIssues.length > 0) {
-      console.log('FETCH GOES HERE');
-      // fetch()
+      fetch('/api/createrequest', {
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          title: this.state.title,
+          gitHubLink: this.state.gitHubLink,
+          allIssues: this.state.allIssues,
+          user: {
+            id: window.user.id,
+          }
+        })
+      })
+      .then(res => {
+        res.json()
+        .then(data => {
+          console.log(data, 'DATA!!')
+        })
+      })
+      .catch(err => {
+        console.error(err, 'ERROR IN FETCH');
+      })
     } else {
       alert('Repository Title, Link, and at least one Issue are all required');
     }
@@ -48,7 +70,7 @@ class CreateRequest extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={{'marginBottom':'50px'}}>
         <br />
         <AllIssues
           allIssues={this.state.allIssues}
@@ -62,9 +84,8 @@ class CreateRequest extends React.Component {
         <RequestForm addIssue={this.addIssue} />
         <br />
         <button
-          className="btn btn-secondary"
-          innertext="Submit Issue Request"
-          onClick={this.handleClick} />
+          className="btn btn-success"
+          onClick={this.handleClick}>Submit Issue Reques</button>
       </div>
     );
   }

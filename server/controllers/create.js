@@ -1,8 +1,9 @@
 const models = require('../../db/models');
 
 module.exports.create = (req, res) => {
+  console.log(req.body, 'Request in create');
   models.Repo.forge({
-    title: req.body.gitHubLink,
+    title: req.body.title,
     github_link: req.body.gitHubLink,
     profile_id: req.body.user.id
    })
@@ -10,16 +11,16 @@ module.exports.create = (req, res) => {
   .tap(result => {
     req.body.allIssues.forEach(issue => {
       return models.Issue.forge({
-        title: issue.issueTitle,
+        title: issue.title,
         description: issue.description,
-        status: issue.issueStatus,
+        status: issue.status,
         issue_link: undefined,
         repo_id: result.id }
       ).save();
     })
   })
   .catch(err => {
-    console.log('---Error saving issue to database---', err);
+    console.log(err, '---Error saving issue to database---');
     res.status(500).send(err)
   });
 }
