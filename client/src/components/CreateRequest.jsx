@@ -1,135 +1,70 @@
 import React from 'react';
-import AllIssues from './AllIssues'; 
+import AllIssues from './AllIssues';
+import IssueHeader from './IssueHeader';
+import RequestForm from './RequestForm';
 
 class CreateRequest extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      title: '',
       gitHubLink: '',
       allIssues: [],
-      issueTitle: '',
-      issueDescription: '',
-    }
+    };
 
-    this.confirmDone = this.confirmDone.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.resetState = this.resetState.bind(this);
-    this.setDescription = this.setDescription.bind(this);
-    this.setLink = this.setLink.bind(this);
-    this.setTitle = this.setTitle.bind(this);
+    this.addIssue = this.addIssue.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+    this.handleLinkChange = this.handleLinkChange.bind(this);
   }
 
-  confirmDone(e) {
+  addIssue(issue) {
+    let allIssues = this.state.allIssues;
+    allIssues.push(issue);
+    this.setState({allIssues});
+  };
+
+  handleTitleChange(e) {
+    let title = this.state.title;
+    title = e.target.value;
+    this.setState({title});
+  }
+
+  handleClick(e) {
     e.preventDefault();
-    if (this.state.allIssues.length > 0) {
-      const data = {
-        gitHubLink: this.state.gitHubLink,
-        allIssues: this.state.allIssues,
-        user: window.user
-      }
-      fetch('/api/createrequest', {
-        method: 'post',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-      })
-      .then(res => {
-        res.json()
-        .then(data => {
-          console.log(data, 'data!!!');
-        })
-      })
-      .catch(err => {
-        console.error(err, 'Error in Fetch');
-      })
+    if (this.state.title.length > 0 && this.state.gitHubLink.length > 0 && this.state.allIssues.length > 0) {
+      console.log('FETCH GOES HERE');
+      // fetch()
     } else {
-      alert('Please fill out at least one issue reques before continuing');
+      alert('Repository Title, Link, and at least one Issue are all required');
     }
-  }
+  };
 
-  handleSubmit(e) {
-    e.preventDefault();
-    if (this.state.gitHubLink && this.state.issueTitle && this.state.issueDescription) {
-      let allIssues = this.state.allIssues;
-      let newIssue = {
-        gitHubLink: this.state.gitHubLink,
-        issueTitle: this.state.issueTitle,
-        issueDescription: this.state.issueDescription,
-        issueStatus: 'open'
-      }
-      allIssues.push(newIssue);
-      this.setState({allIssues});
-      this.resetState();
-    }
-  }
-
-  resetState() {
-    let issueTitle = '';
-    let issueDescription = '';
-    this.setState({ issueTitle, issueDescription});
-  }
-
-  setDescription(e) {
-    let issueDescription = e.target.value;
-    this.setState({issueDescription});
-  }
-
-  setLink(e) {
-    let gitHubLink = e.target.value;
+  handleLinkChange(e) {
+    let gitHubLink = this.state.gitHubLink;
+    gitHubLink = e.target.value;
     this.setState({gitHubLink});
-  }
-
-  setTitle(e) {
-    let issueTitle = e.target.value;
-    this.setState({issueTitle});
-  }
+  };
 
   render() {
     return (
       <div>
+        <br />
         <AllIssues
           allIssues={this.state.allIssues}
-          repository={this.state.gitHubLink} />
-        <hr />
-        <form>
-          <div className="form-group">
-            <label htmlFor="githubLink">Link to the GitHub Repository</label>
-            <input
-              type="text"
-              className="form-control"
-              id="githubLink"
-              placeholder="GitHub Repository"
-              onChange={this.setLink}
-              required/>
-          </div>
-          <div className="form-group">
-            <label htmlFor="issueTitle">Issue Title</label>
-            <input
-              type="text"
-              className="form-control"
-              id="issueTitle"
-              palceholder="Title"
-              value={this.state.issueTitle}
-              onChange={this.setTitle}
-              required/>
-          </div>
-          <div className="form-group">
-            <label htmlFor="issueDescription">Description</label>
-            <input
-              type="text"
-              className="form-control"
-              id="issueDescription"
-              palceholder="Describe the issue you want opened"
-              value={this.state.issueDescription}
-              onChange={this.setDescription}
-              required/>
-          </div>
-          <button className="btn btn-primary" onClick={this.handleSubmit}>Add Issue</button>
-        </form>
+          title={this.state.title}
+          link={this.state.gitHubLink} />
         <br />
-        <button className="btn btn-submit" onClick={this.confirmDone}>Submit Issue Request</button>
+        <IssueHeader
+          titleChange={this.handleTitleChange}
+          linkChange={this.handleLinkChange} />
+        <br />
+        <RequestForm addIssue={this.addIssue} />
+        <br />
+        <button
+          className="btn btn-secondary"
+          innertext="Submit Issue Request"
+          onClick={this.handleClick} />
       </div>
     );
   }
