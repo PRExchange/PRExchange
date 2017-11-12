@@ -4,9 +4,9 @@ const Issue = props => {
   const issue = props.issue;
   return (
     <tr>
-      <td>{issue.issueTitle}</td>
-      <td>{issue.issueDescription}</td>
-      <td>{issue.issueStatus}</td>
+      <td>{issue.title}</td>
+      <td>{issue.description}</td>
+      <td>{issue.status}</td>
     </tr>
   );
 }
