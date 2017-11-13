@@ -1,7 +1,6 @@
 const models = require('../../db/models');
 
 module.exports.create = (req, res) => {
-  console.log(req.body, 'Request in create');
   models.Repo.forge({
     title: req.body.title,
     github_link: req.body.gitHubLink,
@@ -20,7 +19,7 @@ module.exports.create = (req, res) => {
     })
   })
   .catch(err => {
-    console.log(err, '---Error saving issue to database---');
+    console.error(err, '---Error saving issue to database---');
     res.status(500).send(err)
   });
-}
+};
