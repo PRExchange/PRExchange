@@ -23,6 +23,7 @@ app.use('/', routes.auth);
 
 // app.all(['/api', '/api/*'], middleware.auth.api);
 app.use('/api', routes.api);
-app.use('/api/createrequest', routes.createrequest)
+app.use('/api/createrequest', routes.createrequest);
+app.use('/api/getrequests', routes.getrequests);
 
 module.exports = app;
