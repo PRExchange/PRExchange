@@ -31,7 +31,6 @@ class CreateRequest extends React.Component {
   }
 
   handleClick(e) {
-    e.preventDefault();
     if (this.state.title.length > 0 && this.state.gitHubLink.length > 0 && this.state.allIssues.length > 0) {
       fetch('/api/createrequest', {
         method: 'POST',
@@ -49,15 +48,15 @@ class CreateRequest extends React.Component {
         })
       })
       .then(res => {
-        res.json()
-        .then(data => {
-          console.log(data, 'DATA!!')
-        })
+        res.status(201).send('Successfully posted to database');
+        res.redirect('/');
       })
       .catch(err => {
-        console.error(err, 'ERROR IN FETCH');
+        console.error(err, 'ERROR IN POSTING REQUEST TO DATABASE');
+        res.status(500).send(err);
       })
     } else {
+      e.preventDefault();
       alert('Repository Title, Link, and at least one Issue are all required');
     }
   };
