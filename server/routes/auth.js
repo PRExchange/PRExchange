@@ -15,6 +15,9 @@ router.route('/home')
 router.route('/createRequest')
   .get(middleware.auth.verify, middleware.auth.render);
 
+router.route('/viewrequest/:id')
+  .get(middleware.auth.verify, middleware.auth.render);
+
 router.route('/login')
   .get((req, res) => {
     res.render('login.ejs')

@@ -16,7 +16,7 @@ import Nav from './Nav';
 import PrivateRoute from './PrivateRoute';
 import Redirected from './Redirected';
 import RequestForm from './RequestForm';
-import Request from './Request';
+import ViewRequest from './ViewRequest';
 
 const Routes = () => (
   <div>
@@ -29,7 +29,7 @@ const Routes = () => (
           <PrivateRoute path='/home' component={Home} />
           <PrivateRoute path='/createrequest' component={CreateRequest} />
           <PrivateRoute path='/requestform' component={RequestForm} />
-          <PrivateRoute path='/request/:id' component={Request} />
+          <PrivateRoute path='/viewrequest' component={ViewRequest} />
           <Route path='/redirected' component={Redirect} />
           
         </Switch>
