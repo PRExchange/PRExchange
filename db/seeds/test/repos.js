@@ -16,8 +16,8 @@ exports.seed = function(knex, Promise) {
     .then(profile => {
       return models.Repo.forge({
         title: 'MyExampleRepo',
-        profile_id: profile.attributes.id,
-        github_link: 'www.github.com'
+        github_link: 'www.github.com',
+        profile_id: profile.attributes.id
       }).save();
     })
     .then(repo => {
