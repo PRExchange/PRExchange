@@ -10,7 +10,7 @@ class AllRequests extends React.Component {
   }
 
   componentWillMount() {
-    fetch('/api/getrequests', {
+    fetch('/api/requests', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
