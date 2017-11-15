@@ -32,7 +32,7 @@ class CreateRequest extends React.Component {
 
   handleClick(e) {
     if (this.state.title.length > 0 && this.state.gitHubLink.length > 0 && this.state.allIssues.length > 0) {
-      fetch('/api/createrequest', {
+      fetch('/api/requests', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
