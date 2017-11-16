@@ -18,6 +18,9 @@ module.exports.create = (req, res) => {
       ).save();
     })
   })
+  .then(results => {
+    res.status(201).send(results);
+  })
   .catch(err => {
     console.error(err, '---Error saving issue to database---');
     res.status(500).send(err)

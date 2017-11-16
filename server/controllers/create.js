@@ -1,4 +1,5 @@
 const models = require('../../db/models');
+const middleware = require('../middleware');
 
 module.exports.create = (req, res) => {
   models.Repo.forge({
@@ -7,16 +8,19 @@ module.exports.create = (req, res) => {
     profile_id: req.body.user.id
    })
   .save()
-  .tap(result => {
+  .tap(res => {
     req.body.allIssues.forEach(issue => {
       return models.Issue.forge({
         title: issue.title,
         description: issue.description,
         status: issue.status,
         issue_link: undefined,
-        repo_id: result.id }
+        repo_id: res.id }
       ).save();
     })
+  })
+  .then(res => {
+    res.status(201).send(res);
   })
   .catch(err => {
     console.error(err, '---Error saving issue to database---');

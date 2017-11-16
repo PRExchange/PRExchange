@@ -33,7 +33,6 @@ module.exports.render = (req, res) => {
 };
 
 module.exports.verify = (req, res, next) => {
-  console.log('verify called');
   if (req.isAuthenticated()) {
     return next();
   }
