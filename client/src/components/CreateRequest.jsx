@@ -9,6 +9,7 @@ class CreateRequest extends React.Component {
     this.state = {
       title: '',
       gitHubLink: '',
+      id: 0,
       allIssues: [],
     };
 
@@ -16,6 +17,7 @@ class CreateRequest extends React.Component {
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleClick = this.handleClick.bind(this);
     this.handleLinkChange = this.handleLinkChange.bind(this);
+    this.handleRedirect = this.handleRedirect.bind(this);
   }
 
   addIssue(issue) {
@@ -32,28 +34,28 @@ class CreateRequest extends React.Component {
 
   handleClick(e) {
     if (this.state.title.length > 0 && this.state.gitHubLink.length > 0 && this.state.allIssues.length > 0) {
+      const body = JSON.stringify({
+        title: this.state.title,
+        gitHubLink: this.state.gitHubLink,
+        allIssues: this.state.allIssues,
+        user: {
+          id: window.user.id
+        }
+      })
       fetch('/api/requests', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-          title: this.state.title,
-          gitHubLink: this.state.gitHubLink,
-          allIssues: this.state.allIssues,
-          user: {
-            id: window.user.id,
-          }
-        })
+        body: body
       })
       .then(res => {
-        res.status(201).send('Successfully posted to database');
-        res.redirect('/');
+        console.log(res, 'res!!!');
+        this.handleRedirect(res);
       })
       .catch(err => {
         console.error(err, 'ERROR IN POSTING REQUEST TO DATABASE');
-        res.status(500).send(err);
       })
     } else {
       e.preventDefault();
@@ -66,6 +68,19 @@ class CreateRequest extends React.Component {
     gitHubLink = e.target.value;
     this.setState({gitHubLink});
   };
+
+  handleRedirect(res) {
+    if (res.status === 201) {
+      res.json()
+      .then(data => {
+        console.log(data, 'DATA');
+        this.setState({id: data.id});
+      })
+      .then(() => {
+        window.location.href = '/home';
+      })
+    }
+  }
 
   render() {
     return (
