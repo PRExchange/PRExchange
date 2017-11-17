@@ -38,3 +38,14 @@ module.exports.getAll = (req, res) => {
       res.status(500).send(err, 'Error getting repos from Database');
     });
 };
+
+module.exports.getOne = (req, res) => {
+  const id = req.params.id;
+  models.Issue.where({repo_id: id}).fetchAll()
+  .then(issues => {
+    res.status(200).send(issues);
+  })
+  .catch(err => {
+    res.status(500).send(err, 'Error getting issues from Database');
+  });
+}

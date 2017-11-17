@@ -7,4 +7,7 @@ router.route('/')
   .get(RepoController.getAll)
   .post(RepoController.create)
 
+router.route('/:id')
+  .get(RepoController.getOne)
+
 module.exports = router;
