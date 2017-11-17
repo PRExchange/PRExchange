@@ -1,6 +1,10 @@
 import React from 'react';
 import Request from './Request';
 
+// All requests is one of the first components a user will see when visiting the application
+// It is a table that contains the repository link, title, and author, as well as a button to view
+// all requested issues on a repository.
+
 class AllRequests extends React.Component {
   constructor(props) {
     super(props);
@@ -8,6 +12,9 @@ class AllRequests extends React.Component {
       repositories: []
     };
   }
+
+  // When the component mounts, a GET request should be sent. This request will return a list of all repositories
+  // which will then be displayed by the component.
 
   componentWillMount() {
     fetch('/api/requests', {

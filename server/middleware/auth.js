@@ -32,6 +32,15 @@ module.exports.render = (req, res) => {
   res.render('index.ejs', {user: JSON.stringify(req.user)});
 };
 
+module.exports.renderById = (req, res) => {
+  const id = req.params.id;
+  if (id !== undefined) {
+    res.redirect(`/api/requests/${id}`);
+  } else {
+    res.status(400).send('Request paramaters invalid');
+  }
+}
+
 module.exports.verify = (req, res, next) => {
   if (req.isAuthenticated()) {
     return next();

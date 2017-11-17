@@ -1,6 +1,9 @@
 import React from 'react';
 import Issue from './Issue';
 
+// AllIssues is the table that shows issues a user has requested opened on their respository
+// It is displayed by the CreateRequest component.
+
 const AllIssues = props => {
   return (
     <div>

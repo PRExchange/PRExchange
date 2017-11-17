@@ -1,5 +1,9 @@
 import React from 'react';
 
+// RequestForm will handle issueDescriptions and titles.
+// This makes it so that every time a user requests a new issue be opened on their repository,
+// they do not have to re-enter the repository title and link
+
 class RequestForm extends React.Component {
   constructor(props) {
     super(props);
