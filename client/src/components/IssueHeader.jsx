@@ -1,5 +1,7 @@
 import React from 'react';
 
+// The header for the issue table displayed by AllIssues (shown by CreateRequest)
+
 const IssueHeader = props => {
   return (
     <form>

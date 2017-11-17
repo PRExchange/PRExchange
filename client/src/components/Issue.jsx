@@ -1,5 +1,7 @@
 import React from 'react';
 
+// Issue is the sub-component displayed by the AllIssues component (displayed by CreateRequest)
+
 const Issue = props => {
   const issue = props.issue;
   return (

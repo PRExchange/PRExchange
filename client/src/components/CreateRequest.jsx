@@ -3,6 +3,8 @@ import AllIssues from './AllIssues';
 import IssueHeader from './IssueHeader';
 import RequestForm from './RequestForm';
 
+// This is the form that a user interacts with when creating an issue request on their repository.
+
 class CreateRequest extends React.Component {
   constructor(props) {
     super(props);
@@ -51,7 +53,6 @@ class CreateRequest extends React.Component {
         body: body
       })
       .then(res => {
-        console.log(res, 'res!!!');
         this.handleRedirect(res);
       })
       .catch(err => {
@@ -73,7 +74,6 @@ class CreateRequest extends React.Component {
     if (res.status === 201) {
       res.json()
       .then(data => {
-        console.log(data, 'DATA');
         this.setState({id: data.id});
       })
       .then(() => {
