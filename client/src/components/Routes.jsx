@@ -29,7 +29,7 @@ const Routes = () => (
           <PrivateRoute path='/home' component={Home} />
           <PrivateRoute path='/createrequest' component={CreateRequest} />
           <PrivateRoute path='/requestform' component={RequestForm} />
-          <PrivateRoute path='/viewrequest/:id' component={ViewRequest} />
+          <Route path='/viewrequest/:id' component={ViewRequest} />
           <Route path='/redirected' component={Redirect} />
           
         </Switch>

@@ -9,6 +9,11 @@ class ViewRequest extends React.Component {
     this.state = {}
   }
 
+  componentWillMount() {
+    console.log('ViewRequest is mounting');
+    console.log(window.id, 'Searching for this id');
+  }
+
   render() {
     return (
       <div>
