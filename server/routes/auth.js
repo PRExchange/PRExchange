@@ -16,7 +16,7 @@ router.route('/createRequest')
   .get(middleware.auth.verify, middleware.auth.render);
 
 router.route('/viewrequest/:id')
-  .get(middleware.auth.verify, middleware.auth.renderById);
+  .get(middleware.auth.renderById);
 
 router.route('/login')
   .get((req, res) => {
