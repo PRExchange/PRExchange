@@ -1,10 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom'
 
 // Each request is a member of the AllRequests table.
 
 const Request = props => {
   const repo = props.req;
-  const href = `viewrequest/${repo.id}`;
   return (
     <tr>
       <td>{repo.title}</td>
@@ -19,7 +19,12 @@ const Request = props => {
         </a>
       </td>
       <td>
-        <a href={href} className='btn btn-secondary' role='button'>All Issues</a>
+        <Link
+          className='btn btn-secondary'
+          role='button'
+          onClick={props.updateSelected(repo.id)}
+          to={`/viewrequest/${repo.id}`}
+          >All Issues</Link>
       </td>
     </tr>
   );

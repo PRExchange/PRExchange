@@ -29,16 +29,18 @@ module.exports.redirect = (req, res) => {
 };
 
 module.exports.render = (req, res) => {
-  res.render('index.ejs', {user: JSON.stringify(req.user)});
+  res.render('index.ejs', {user: JSON.stringify(req.user), id: undefined});
 };
 
 module.exports.renderById = (req, res) => {
   const id = req.params.id;
-  if (id !== undefined) {
-    res.redirect(`/api/requests/${id}`);
-  } else {
-    res.status(400).send('Request paramaters invalid');
+  console.log(id, 'id!!!!!!!!!!!!!!!!!!!!!!!!!');
+  const noUser = {
+    id: -1,
+    username: 'ANONYMOUS_GUEST_ACCOUNT_USERNAME'
   }
+  const user = req.user || noUser;
+  res.render('index.ejs', {user: JSON.stringify(user), id: JSON.stringify(id)});
 }
 
 module.exports.verify = (req, res, next) => {
