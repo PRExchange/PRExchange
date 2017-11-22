@@ -29,11 +29,12 @@ module.exports.redirect = (req, res) => {
 };
 
 module.exports.render = (req, res) => {
-  res.render('index.ejs', {user: JSON.stringify(req.user), id: JSON.stringify(req.id)});
+  res.render('index.ejs', {user: JSON.stringify(req.user), id: undefined});
 };
 
 module.exports.renderById = (req, res) => {
   const id = req.params.id;
+  console.log(id, 'id!!!!!!!!!!!!!!!!!!!!!!!!!');
   const noUser = {
     id: -1,
     username: 'ANONYMOUS_GUEST_ACCOUNT_USERNAME'

@@ -19,7 +19,12 @@ const Request = props => {
         </a>
       </td>
       <td>
-        <Link className='btn btn-secondary' role='button' to={`/viewrequest/${repo.id}`}>All Issues</Link>
+        <Link
+          className='btn btn-secondary'
+          role='button'
+          onClick={props.updateSelected(repo.id)}
+          to={`/viewrequest/${repo.id}`}
+          >All Issues</Link>
       </td>
     </tr>
   );
